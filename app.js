@@ -4,6 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+var uri = 'mongodb://localhost/dogemate';
+
+mongoose.Promise = global.Promise;
+mongoose.connect(uri)
+  .then(() => console.log('success'))
+  .catch((err) => console.log(err));
 
 var index = require('./routes/index');
 var especialistas = require('./routes/especialistas');
