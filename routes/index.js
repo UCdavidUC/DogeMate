@@ -3,12 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-/* GET login page */
-router.get('/login', function(req, res, next) {
-  res.render('external/start');
+  res.render('index', { title: 'DogeMate' });
 });
 
 module.exports = router;

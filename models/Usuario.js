@@ -1,4 +1,7 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+      Schema = mongoose.Schema,
+      bcrypt = require('bcrypt'),
+      SALT_WORK_FACTOR = 10;
 
 var UsuarioSchema = new Schema({
     email           : { type: String, required: true, index: { unique: true } },
@@ -7,9 +10,11 @@ var UsuarioSchema = new Schema({
     apellido_p      : String,
     apellido_m      : String,
     celular         : Number,
-    mascota : {
-        id_mascota
-    }
+    mascotas : [
+        {
+            id_mascota : String
+        }
+    ]
 });
 
-module.exports = mongoose.Schema('Usuario', UsuarioSchema);
+module.exports = mongoose.model('Usuario', UsuarioSchema);
