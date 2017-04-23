@@ -18,9 +18,8 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
+  padding: 50px 70px;
   margin: 0;
-  padding-top: 50px;
-  padding-bottom: 70px;
 }
 
 #map {
@@ -4285,6 +4284,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-brand {
   float: left;
   padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+  height: 50px;
+}
+.navbar-brand-image {
+  float: left;
   font-size: 18px;
   line-height: 20px;
   height: 50px;

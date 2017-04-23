@@ -19,6 +19,7 @@ router.post('/', function(req, res, next) {
       return next(err);
     }
     res.json(post);
+    res.render('/dashboard');
   });
 });
 

@@ -23,7 +23,7 @@ var EspecialistaSchema = Schema({
 
 // Especialista password encryption
 EspecialistaSchema.pre('save', function(next) {
-    var expecialista = this;
+    var especialista = this;
     if (!especialista.isModified('contrasena')) return next();
     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
         if(err) return next(err);
