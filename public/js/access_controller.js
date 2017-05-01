@@ -1,18 +1,16 @@
-angular.module('app', ['ngRoute', 'ngTemplate'])
+angular.module('app', ['ngRoute', 'ngResource'])
     .factory('Especialistas', ['$resource', function($resource) {
-        return $resource('/especialistas/:_email', null, {
+        var e = $resource('/especialistas/:_email', null, {
             'update': { method: 'PUT' }
         });
+        return e;
     }])
-    .controller('EspecialistaRegistroController', ['$scope', 'Especialistas', function($scope, Especialistas) {
+    .controller('RegistroController', ['$scope', 'Especialistas', function($scope, Especialistas) {
         $scope.especialistas = Especialistas.query();
-        console.log('EspecialistaRegistroController');
         
         // Email validation
         $('#email').keyup(function emailValidation() {
             var email = $("#email").val();
-            var pwd = $('#contrasena');
-            var cf = $('#confirmacion');
             var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if(regex.test(email)) {
                 $('#emailAlert').html('Email válido.');
@@ -41,7 +39,6 @@ angular.module('app', ['ngRoute', 'ngTemplate'])
         // Password match validation
         $('#confirmacion').keyup(function passwordValidation() {
             var pwd = $('#contrasena').val();
-            console.log(pwd);
             var conf = $('#confirmacion').val();
             if(pwd===conf) {
                 $('#passwordConfirmationAlert').html('Las contrase&ntilde;as coinciden.');
@@ -51,31 +48,105 @@ angular.module('app', ['ngRoute', 'ngTemplate'])
                 $('#passwordConfirmationAlert').css('color', 'red');
             }
         });
-        
 
+        // Number field validation
+        $('#celular').keyup(function phoneValidation() {
+            var celular = $('#celular').val();
+            var regex = /^\d+$/;
+            if($('#celular').val().match(regex) && celular.length === 10) {
+                $('#celularAlert').html('Número de celular válido.');
+                $('#celularAlert').css('color', 'green');
+            } else {
+                $('#celularAlert').html('<strong>Error</strong>: El número celular introducido no es válido.');
+                $('#celularAlert').css('color', 'red');
+            }
+        });
+
+        // Datepicker activation and setup
+        $('#datepicker').datepicker({
+            defaultDate: "-18y", 
+            navigationAsDateFormat: true, 
+            changeYear: true
+        });
+
+        // Image file validation
+        $('#fotografia').change(function() {
+            var image = $('#fotografia').val();
+            var type = image.replace(/^.*\./, '');
+            var ValidImageTypes = ["gif", "jpeg", "png", "jpg"];
+            if($.inArray(type, ValidImageTypes) < 0) {
+                $('#fotografiaAlert').html('<strong>Error</strong>: Error, la imágen no es válida.');
+                $('#fotografiaAlert').css('color', 'red');
+            } else {
+                $('#fotografiaAlert').html('Fotografía válida.');
+                $('#fotografiaAlert').css('color', 'green');
+                preview(this);
+            }
+        });
+
+        // Specialist photo preview
+        function preview(input) {
+            if(input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#photoPreview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                console.log('Error: Couldn\'t load picture..');
+            }
+        }
+        
         // Save specialist into Mongo
-        $scope.save = function(newEspecialista) {
-            if(!$scope.newEspecialista || $scope.newEspecialista.length < 1) return;
+        $scope.save = function(nuevoEspecialista) {
+            var email = $scope.nuevoEspecialista.email;
+            var contrasena = $scope.nuevoEspecialista.contrasena;
+            console.log('Email: ' + email);
+            if(!$scope.nuevoEspecialista || $scope.nuevoEspecialista.length < 1) {
+                console.log('Please introduce specialista variables..');
+                return;
+            }
+            console.log('Creating specialist...');
             var especialista = new Especialistas({
-                email: newEspecialista.email,
-                contrasena: newEspecialista.contrasena
+                _id         : nuevoEspecialista.email,
+                contrasena  : nuevoEspecialista.contrasena,
+                nombre      : nuevoEspecialista.nombre,
+                apellido_p  : nuevoEspecialista.apellido_p,
+                apellido_m  : nuevoEspecialista.apellido_m,
+                fecha_nac   : nuevoEspecialista.fecha_nac,
+                celular     : nuevoEspecialista.celular,
+                peso        : nuevoEspecialista.peso,
+                especialista: nuevoEspecialista.estatura,
+                fotografia  : nuevoEspecialista.fotografia
             });
-            especialista.save(function() {
+            especialista.$save(function() {
                 $scope.especialistas.push(especialista);
                 $scope.newEspecialista = '';
             });
+            
         }
         
     }])
-    .controller('EspecialistaLoginController', ['$scope', '$routeParams', 'Especialista', '$location', function($scope, $routeParams, Especialista, $location) {
-
+    .controller('LoginController', ['$scope', '$routeParams', 'Especialistas', '$location', function($scope, $routeParams, Especialistas, $location) {
+        $scope.especialista = Especialistas.get({
+            email: $routeParams.email
+        });
+        $scope.find = function() {
+            Especialista.get({
+                email: $scope.especialista._email,
+                contrasena: $scope.especialista.password
+            }, $scope.especialista, function() {
+                $location.url('/');
+                console.log('buscando especialista...');
+            });
+        };
     }])
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/start#registro', {
+        $routeProvider.when('/registro', {
             templateUrl: '/registro.html',
-            controller: 'EspecialistaRegistroController'
-        }).when('/start', {
+            controller: 'RegistroController'
+        }).when('/', {
             templateUrl: '/login.html',
-            controller: 'EspecialistaLoginController'
+            controller: 'LoginController'
         });
     }]);

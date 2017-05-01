@@ -1,22 +1,32 @@
 <script type="text/ng-template" id="/login.html">
-    <div class="page-header">
-        <h1 align="center">Acceso</h1>
-    </div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-3 control-label" for="_email">Email</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="_email" ng-model="especialista.email" required="required"/>
+    <div class="container">
+        <div class="page-header">
+            <h1>Acceso</h1>
+        </div>
+        <form class="form-horizontal" method="post">
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="_email">Email</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="_email" ng-model="especialista._email" required="required"/>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label" for="password">Contrase&ntilde;a</label>
-            <div class="col-sm-4">
-                <input type="password" class="form-control" id="password" ng-model="especialista.contrasena" required="required"/>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="password">Contrase&ntilde;a</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" id="password" ng-model="especialista.password" required="required"/>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-3 col-sm-offset-4">
-            <button type="submit" class="form-control" ng-model="especialista" ng-click="access()" value="Entrar" />
-        </div>
+            <div class="col-sm-4 col-sm-offset-3">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-info
+                        " href="#/registro">Registrarse</a>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-success" ng-model="especialista" ng-click="find()">Entrar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </script>
