@@ -13,7 +13,10 @@ var EspecialistaSchema = Schema({
     celular         : Number,
     peso            : Number,
     estatura        : Number,
-    reputacion      : Number,
+    reputacion      : {
+        type        : Number,
+        default     : 0.0
+    },
     especialidad    : String,
     fotografia      : {
         data        : Buffer,

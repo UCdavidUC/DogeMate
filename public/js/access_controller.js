@@ -1,11 +1,11 @@
 angular.module('app', ['ngRoute', 'ngResource'])
     .factory('Especialistas', ['$resource', function($resource) {
-        var e = $resource('/especialistas/:_email', null, {
+        var e = $resource('/especialistas/:_id', null, {
             'update': { method: 'PUT' }
         });
         return e;
     }])
-    .controller('RegistroController', ['$scope', 'Especialistas', function($scope, Especialistas) {
+    .controller('RegistroController', ['$scope', 'Especialistas', '$window',function($scope, Especialistas, $window) {
         $scope.especialistas = Especialistas.query();
         
         // Email validation
@@ -116,27 +116,35 @@ angular.module('app', ['ngRoute', 'ngResource'])
                 fecha_nac   : nuevoEspecialista.fecha_nac,
                 celular     : nuevoEspecialista.celular,
                 peso        : nuevoEspecialista.peso,
-                especialista: nuevoEspecialista.estatura,
+                estatura    : nuevoEspecialista.estatura,
                 fotografia  : nuevoEspecialista.fotografia
             });
-            especialista.$save(function() {
+            var respuesta = especialista.$save(function() {
                 $scope.especialistas.push(especialista);
                 $scope.newEspecialista = '';
             });
-            
+            console.log(respuesta);
+            if(respuesta === 'Hola') {
+                $window.location.href = '/dashboard';
+            }
         }
         
     }])
-    .controller('LoginController', ['$scope', '$routeParams', 'Especialistas', '$location', function($scope, $routeParams, Especialistas, $location) {
+    .controller('LoginController', ['$scope', '$routeParams', 'Especialistas', '$location', '$window', function($scope, $routeParams, Especialistas, $location, $window) {
+        // Controlador para solicitar un especialista basado en el id.        
+        $scope.especialistas = Especialistas.query();
+        /*
         $scope.especialista = Especialistas.get({
             email: $routeParams.email
-        });
+        });*/
+        console.log('Aqui');
         $scope.find = function() {
-            Especialista.get({
-                email: $scope.especialista._email,
-                contrasena: $scope.especialista.password
+            Especialistas.query({
+                email: $scope.especialista._email
+                /*contrasena: $scope.especialista.password*/
             }, $scope.especialista, function() {
                 $location.url('/');
+                $window.location.href = '/dashboard';
                 console.log('buscando especialista...');
             });
         };

@@ -3,7 +3,11 @@ var router = express.Router();
 
 var Especialista = require('../models/Especialista.js');
 
-/* GET especialistas. */
+/* GET especialistas.
+*  Devuelve una lista de todos los especialistas.
+*  Estos son los callback function, aqui pones que es lo que quieres pedir en la URL
+*  y que es lo que quieres que te devuelva. 
+*/
 router.get('/', function(req, res, next) {
   Especialista.find(function(err, post) {
     if(err) return next(err);
@@ -19,6 +23,8 @@ router.post('/', function(req, res, next) {
       return next(err);
     }
     res.json(post);
+    // Send manda a la vista algo en formato json,
+    //res.send(post);
   });
 });
 
