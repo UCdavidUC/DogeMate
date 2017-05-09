@@ -55,6 +55,11 @@ router.get('/termycon', function(req, res, next) {
   res.render('internal/registro/termycon');
 });
 
+/* GET Specialist oficial termycon */
+router.get('/fin', function(req, res, next) {
+  res.render('internal/registro/fin');
+});
+
 /* GET Specialist oficial antecedentes */
 router.get('/antecedentes', function(req, res, next) {
   res.render('internal/registro/antecedentes');
