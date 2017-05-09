@@ -144,7 +144,7 @@ angular.module('app', ['ngRoute', 'ngResource'])
                 /*contrasena: $scope.especialista.password*/
             }, $scope.especialista, function() {
                 $location.url('/');
-                $window.location.href = '/dashboard';
+                $window.location.href = '/paseos';
                 console.log('buscando especialista...');
             });
         };

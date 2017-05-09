@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var SolicitudSchema = new Schema({
+    _id             : Number,
     estado          : Number,
     fecha_hora      : {
         type        : Date,

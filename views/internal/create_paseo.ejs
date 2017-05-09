@@ -1,0 +1,50 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Paseos alta</title>
+        <%- include('../_partials/_header') %>
+    </head>
+    <body>
+        <script type="text/ng-template" id="/paseo.html">
+            <form>
+                <div class="form-group">
+                    <label for="fechai">Fecha y hora inicio</label>
+                    <input type="text" ng-model="paseo.fechai" name="fechai" id="fechai" placeholder="YYYY-MM-DDTHH:MM:ss"/>
+                </div>
+                <div class="form-group">
+                    <label for="fechaf">Fecha y hora fin</label>
+                    <input type="text" ng-model="paseo.fechaf" name="fechaf" id="fechaf" placeholder="YYYY-MM-DDTHH:MM:ss"/>
+                </div>
+                 <div class="form-group">
+                    <label for="duracion">Duración</label>
+                    <input type="text" ng-model="paseo.fecha" name="duracion" id="duracion"/>
+                </div>
+                 <div class="form-group">
+                    <label for="fecha">lat_inicio</label>
+                    <input type="text" ng-model="paseo.lat_inicio" name="lat_incio" id="fecha"/>
+                </div>
+                 <div class="form-group">
+                    <label for="fecha">lon_inicio</label>
+                    <input type="text" ng-model="paseo.fecha" name="fecha" id="fecha"/>
+                </div>
+                <div class="form-group">
+                    <label for="fecha">lat_fin</label>
+                    <input type="text" ng-model="paseo.fecha" name="fecha" id="fecha"/>
+                </div>
+                 <div class="form-group">
+                    <label for="fecha">lon_fin</label>
+                    <input type="text" ng-model="paseo.fecha" name="fecha" id="fecha"/>
+                </div>
+                 <div class="form-group">
+                    <label for="fecha">Costo</label>
+                    <input type="text" ng-model="paseo.fecha" name="fecha" id="fecha"/>
+                </div>
+                 <div class="form-group">
+                    <label for="fecha">Factor Costo</label>
+                    <input type="text" ng-model="paseo.fecha" name="fecha" id="fecha"/>
+                </div>
+            </form>
+        </script>
+        
+    </body>
+</html>

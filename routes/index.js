@@ -70,6 +70,21 @@ router.get('/intperfil', function(req, res, next) {
   res.render('internal/intperfil');
 });
 
+/* GET Paseos */
+router.get('/paseos', function(req, res, next) {
+  res.render('internal/paseos');
+});
+
+/* GET Registro de paseos */
+router.get('/paseos/registro', function(req, res, next) {
+  res.render('internal/create_paseo');
+});
+
+/* GET privacy policy */
+router.get('legal', function(req, res, next) {
+  res.render('legal');
+});
+
 /* GET Error Page */
 router.get('/error', function(req, res, next) {
   res.render('error');
